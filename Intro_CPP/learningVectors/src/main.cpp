@@ -27,6 +27,7 @@ int main()
     Vector2D playerPosition(400.f, 300.f);
     sf::Vector2f playerPos(400.f, 300.f);
 
+    Vector2D direction {0.0f, 0.0f};
 
     float speed = 4.f;
 
@@ -37,41 +38,58 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+            // pos.y -= speed;
+            std::cout<<'W'<<'\n';
+            direction.y=1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+            // pos.y += speed;
+            std::cout<<'S'<<'\n';
+            direction.y=-1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+            // pos.x -= speed;
+            std::cout<<'A'<<'\n';
+            direction.x=1.0f;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+            // pos.x += speed;
+            std::cout<<'D'<<'\n';
+            direction.x=-1.0f;
         }
 
-        // Mouse position (window coordinates)
-        sf::Vector2f mouse =
-            window.mapPixelToCoords(sf::Mouse::getPosition(window));
+        // // Mouse position (window coordinates)
+        // sf::Vector2f mouse =
+        //     window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
-        // We need to get the mouse coordinates ax World Position
-        Vector2D mousePosition {mouse.x, mouse.y}; 
-        // std::cout<<mousePosition<<'\n';
+        // // We need to get the mouse coordinates ax World Position
+        // Vector2D mousePosition {mouse.x, mouse.y}; 
+        // // std::cout<<mousePosition<<'\n';
 
-        // -------- VECTOR MATH CORE --------
+        // // -------- VECTOR MATH CORE --------
 
-        Vector2D direr =  mousePosition- playerPosition; 
-        direr = Normalize(direr);
-        Vector2D veloz = direr*speed; 
+        // Vector2D direr =  mousePosition- playerPosition; 
+        // direr = Normalize(direr);
+        // Vector2D veloz = direr*speed; 
 
-        playerPosition+=veloz;
-        // How is going to follow the mouse  ? 
-        // Vector2D direction = mousePosition-playerPosition;// Direction to follow 
-        // direction.normalize(); // Set to a normalized vector (magnitud of one) 
-        // Vector2D velocity {direction[0]*speed,direction[1]*speed };
-        // playerPosition = playerPosition+velocity; //
+        // playerPosition+=veloz;
+        // // How is going to follow the mouse  ? 
+        // // Vector2D direction = mousePosition-playerPosition;// Direction to follow 
+        // // direction.normalize(); // Set to a normalized vector (magnitud of one) 
+        // // Vector2D velocity {direction[0]*speed,direction[1]*speed };
+        // // playerPosition = playerPosition+velocity; //
 
-        sf::Vector2f direction = mouse - playerPos;   // subtraction
-        direction = normalize(direction);              // normalization
-        sf::Vector2f velocity = direction * speed;     // scalar multiplication
+        // sf::Vector2f direction = mouse - playerPos;   // subtraction
+        // direction = normalize(direction);              // normalization
+        // sf::Vector2f velocity = direction * speed;     // scalar multiplication
         
-        // std::cout<<"Veloz: "<<veloz<<'\n';
-        // std::cout<<"Velocity"<<velocity.x<<','<<velocity.y<<'\n'; 
+        // // std::cout<<"Veloz: "<<veloz<<'\n';
+        // // std::cout<<"Velocity"<<velocity.x<<','<<velocity.y<<'\n'; 
         
-        playerPos += velocity;                         // addition
+        // playerPos += velocity;                         // addition
 
 
-
-        // ----------------------------------
+        
+        // // ----------------------------------
 
         sf::Vector2f finalPosition {playerPosition.x,playerPosition.y};
         // playerModel.setPosition(finalPosition);
