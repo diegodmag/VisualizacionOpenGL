@@ -1,0 +1,92 @@
+#ifndef VECTOR2D_H
+#define VECTOR2D_H
+
+#include <cmath>
+#include <iostream>
+
+struct Vector2D
+{
+    float x,y; 
+
+    Vector2D(float a, float b)
+        :x{a},y{b}
+    {
+
+    }
+
+    float& operator [](int i){
+        if(0<=i<=1){
+            return ((&x)[i]);
+        }
+    }
+    
+    const float& operator [](int i) const{  
+        if(0<=i<=1){
+            return ((&x)[i]);
+        }
+    }
+
+    // All the member functions modifies the vector and return the same vector
+    
+    Vector2D& operator *= (float s){
+        x*=s;
+        y*=s; 
+        return *this; // this returns a pointer to the object that called the function
+        // therefore *this, returns the object 
+    }
+
+    Vector2D& operator /= (float s){
+        x/=s;
+        y/=s; 
+        return *this; // this returns a pointer to the object that called the function
+    }
+
+    Vector2D& operator += (const Vector2D& v){
+        x+=v.x; 
+        y+=v.y; 
+        return *this;
+    }
+
+    Vector2D& operator -= (const Vector2D& v){
+        x-=v.x; 
+        y-=v.y; 
+        return *this;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os,const Vector2D& v) {
+        os << "(" << v.x << ", " << v.y<<")";
+        return os;
+    }
+};
+
+Vector2D operator * (const Vector2D& v, float s){
+    return Vector2D{v.x*s, v.y*s};
+}
+
+Vector2D operator / (const Vector2D& v, float s){
+    return Vector2D{v.x/s, v.y/s};
+}
+
+Vector2D operator - (const Vector2D& v){
+    return Vector2D{-v.x, -v.y};
+}
+
+Vector2D operator +(const Vector2D& u, const Vector2D& v){
+    return Vector2D{u.x+v.x, u.y+v.y};
+}
+
+Vector2D operator -(const Vector2D& u, const Vector2D& v){
+    return Vector2D{u.x-v.x, u.y-v.y};
+}
+
+float Magnitude (const Vector2D& v){
+    return std::sqrt(v.x*v.x + v.y*v.y);
+}
+
+Vector2D Normalize (const Vector2D& v){
+    return v/Magnitude(v); 
+}
+
+
+
+#endif
