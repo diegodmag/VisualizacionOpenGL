@@ -98,7 +98,7 @@ int main()
 
         sf::Vector2f finalPosition {playerPosition.x,playerPosition.y};
         // playerModel.setPosition(finalPosition);
-
+        
         playerModel.setPosition(finalPosition);
         // playerModel.setPosition(playerPos);
 
