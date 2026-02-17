@@ -38,26 +38,29 @@ int main()
         {
             if (event.type == sf::Event::Closed)
                 window.close();
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
-            // pos.y -= speed;
-            std::cout<<'W'<<'\n';
-            direction.y=1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-            // pos.y += speed;
-            std::cout<<'S'<<'\n';
-            direction.y=-1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
-            // pos.x -= speed;
-            std::cout<<'A'<<'\n';
-            direction.x=1.0f;
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-            // pos.x += speed;
-            std::cout<<'D'<<'\n';
-            direction.x=-1.0f;
         }
-
-        // // Mouse position (window coordinates)
+            
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
+                // pos.y -= speed;
+                std::cout<<'W'<<'\n';
+                direction.x=0,direction.y=-1; 
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
+                // pos.y += speed;
+                std::cout<<'S'<<'\n';
+                direction.x=0,direction.y=1; 
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
+                // pos.x -= speed;
+                std::cout<<'A'<<'\n';
+                direction.x=-1,direction.y=0; 
+            }
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+                // pos.x += speed;
+                std::cout<<'D'<<'\n';
+                direction.x=1,direction.y=0; 
+            }
+            // // Mouse position (window coordinates)
         // sf::Vector2f mouse =
         //     window.mapPixelToCoords(sf::Mouse::getPosition(window));
 
@@ -90,6 +93,8 @@ int main()
 
         
         // // ----------------------------------
+        Vector2D velocity {direction*speed};
+        playerPosition+=velocity;
 
         sf::Vector2f finalPosition {playerPosition.x,playerPosition.y};
         // playerModel.setPosition(finalPosition);
