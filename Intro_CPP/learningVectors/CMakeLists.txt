@@ -9,7 +9,8 @@ find_package(SFML 2.5 COMPONENTS graphics window system REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME}  src/main.cpp
+                                src/Levels.cpp)
 
 target_link_libraries(${PROJECT_NAME}
     sfml-graphics
