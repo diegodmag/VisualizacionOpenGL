@@ -10,12 +10,19 @@ namespace math::linear{
     {
         float x,y; 
     
+        Vector2D(){
+            x=0.0f;
+            y=0.0f;
+        }
+
         Vector2D(float a, float b)
             :x{a},y{b} // Initialization List 
         {
     
         }
     
+        // Vector2D v -> v[0] = x, v[1]=y 
+
         float& operator [](int i){
             if(0<=i<=1){
                 return (i==0) ? x : y; 
@@ -92,7 +99,10 @@ namespace math::linear{
         // Que pasa si el vector es el 0.0f, 0.0f ? 
         return v/Magnitude(v); 
     }
+
 };
+
+
 
 
 

@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include "Vector2D.h"
+#include "Player.h"
 
 void level::level_1(sf::RenderWindow& window){
     // Player - Visual representation
@@ -54,18 +55,8 @@ void level::level_1(sf::RenderWindow& window){
 
 void level::level_2(sf::RenderWindow& window){
 
-    // Player - Visual representation
-    sf::CircleShape playerModel(15);
-    playerModel.setOrigin(15, 15);
-    playerModel.setFillColor(sf::Color::Green);
-    // Player vector
-    math::linear::Vector2D playerPosition(400.f, 300.f);
-    //Speed
-    float speed = 4.f;
 
-    // Important, direction
-    math::linear::Vector2D playerDirection{0.0f, 0.0f};
-
+    Player p1 (15, 400.0f, 300.0f);
     sf::Event event;
 
     while (window.isOpen())
@@ -76,40 +67,34 @@ void level::level_2(sf::RenderWindow& window){
                 window.close();
         }
 
-        // Check for player input 
-        playerDirection = {0.0f, 0.0f};
+        p1.getDirection() = {0.0f, 0.0f}; 
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)){
-            playerDirection.y -= 1.f; 
+            // playerDirection.y -= 1.f; 
+            p1.getDirection().y -= 1.f; 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
-            playerDirection.y += 1.f; 
+            // playerDirection.y += 1.f; 
+            p1.getDirection().y += 1.f; 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)){
-            playerDirection.x -= 1.f; 
+            // playerDirection.x -= 1.f; 
+            p1.getDirection().x -= 1.f; 
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-            playerDirection.x += 1.f; 
+            // playerDirection.x += 1.f; 
+            p1.getDirection().x += 1.f; 
         }
 
-        playerDirection = math::linear::Normalize(playerDirection);
-
-        // Calculate movement
-        math::linear::Vector2D velocity {0.0f, 0.0f};
-        velocity = playerDirection*speed;
-        std::cout<<velocity<<'\n';
-        // std::cout<<playerPosition<<'\n';
-        playerPosition+=velocity;
-
+        math::linear::Vector2D player_move = p1.getMovement();
         // std::cout<<playerPosition<<'\n';
 
-        sf::Vector2 finalPosition{playerPosition.x, playerPosition.y};
+        sf::Vector2 finalPosition{player_move.x, player_move.y};
 
-        playerModel.setPosition(finalPosition);
-
+        p1.returnShape().setPosition(finalPosition);
         // Draw
         window.clear(sf::Color::Black);
-        window.draw(playerModel);
+        window.draw(p1.returnShape());
         window.display();
     }
     
