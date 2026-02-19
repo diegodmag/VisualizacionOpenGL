@@ -11,25 +11,26 @@ private:
     // Model
     sf::CircleShape m_shape; 
 
-
     // 
     math::linear::Vector2D m_playerPosition; 
     math::linear::Vector2D m_playerDirection; 
     math::linear::Vector2D m_Velocity; 
+
+    sf::Vector2f finalPosition{0.0f,0.0f};
+
     float m_speed = 4.0f; 
 
-    void InitShape(int radius){
+    void InitShape(sf::Color color, int radius){
         m_shape.setRadius(radius); 
         m_shape.setOrigin(15,15);
-        m_shape.setFillColor(sf::Color::Green); 
+        m_shape.setFillColor(color); 
     }
 
 public: 
 
-    Player(int radius, float pos_x, float pos_y)
+    Player(sf::Color color, int radius, float pos_x, float pos_y)
     {
-
-        InitShape(radius);
+        InitShape(color, radius);
         //
         m_playerPosition[0]=pos_x; 
         m_playerPosition[1]=pos_y; 
@@ -48,20 +49,20 @@ public:
     //     return m_Velocity;
     // }
 
-    const math::linear::Vector2D& getMovement() {
+    void Move(){
         m_playerDirection= math::linear::Normalize(m_playerDirection);
         m_Velocity= m_playerDirection*m_speed;
         m_playerPosition+=m_Velocity; 
-        return m_playerPosition;
+        // Passed to a sf::Vector2
+        finalPosition.x = m_playerPosition.x; 
+        finalPosition.y = m_playerPosition.y; 
+
+        m_shape.setPosition(finalPosition);
     }
 
-    sf::CircleShape& returnShape(){
+    const sf::CircleShape& returnShape()const {
         return m_shape;
     }
-
-    // void setShapePos(sf::Vector2& new_pos){
-    //     m_shape.setPosition(new_pos);
-    // }
 
 };
 

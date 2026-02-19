@@ -56,7 +56,7 @@ void level::level_1(sf::RenderWindow& window){
 void level::level_2(sf::RenderWindow& window){
 
 
-    Player p1 (15, 400.0f, 300.0f);
+    Player p1 (sf::Color::Red,15, 400.0f, 300.0f);
     sf::Event event;
 
     while (window.isOpen())
@@ -86,12 +86,10 @@ void level::level_2(sf::RenderWindow& window){
             p1.getDirection().x += 1.f; 
         }
 
-        math::linear::Vector2D player_move = p1.getMovement();
-        // std::cout<<playerPosition<<'\n';
+        p1.Move();
 
-        sf::Vector2 finalPosition{player_move.x, player_move.y};
 
-        p1.returnShape().setPosition(finalPosition);
+        // p1.returnShape().setPosition(finalPosition);
         // Draw
         window.clear(sf::Color::Black);
         window.draw(p1.returnShape());
