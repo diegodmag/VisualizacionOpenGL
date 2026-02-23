@@ -19,12 +19,13 @@ public:
     Entity(sf::Color color, float radius, float x, float y, float speed);
     ~Entity();
 
-    virtual void Update() = 0; // Needs to be declared by children 
+    virtual void Update(float deltaTime) = 0; // Needs to be declared by children 
 
-    virtual void ComputeMovement();
+    virtual void ComputeMovement(float deltaTime);
 
     const sf::Drawable& getDrawable() const;
     
+    const math::linear::Vector2D& getPosition()const;
 };
 
 

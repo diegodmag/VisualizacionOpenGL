@@ -14,14 +14,16 @@
         
     }
 
-    void Entity::ComputeMovement(){
+    void Entity::ComputeMovement(float deltaTime){
         if(math::linear::Magnitude(m_direction) >0){
             m_direction = math::linear::Normalize(m_direction);
-            m_position += m_direction*m_speed;
+            m_position += m_direction*m_speed*deltaTime;
             // Graphics
             m_shape.setPosition(m_position[0], m_position[1]);
         }
     }
 
     const sf::Drawable& Entity::getDrawable() const {return m_shape;}
+
+    const math::linear::Vector2D& Entity::getPosition()const {return m_position;}
 

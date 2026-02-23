@@ -12,6 +12,7 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 add_executable(${PROJECT_NAME}  src/main.cpp
                                 src/Entity.cpp
                                 src/Player.cpp
+                                src/Enemy.cpp
                                 src/Game.cpp)
 
 target_link_libraries(${PROJECT_NAME}
