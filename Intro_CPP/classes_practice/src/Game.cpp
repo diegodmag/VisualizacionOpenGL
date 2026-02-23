@@ -13,36 +13,37 @@ Game::Game(Player& player, std::vector<Enemy>& enemies)
 
 void Game::Update(){
 
-    sf::Clock clock;
+    // sf::Clock se encarga de medir el tiempo real que pasa entre frames
+    sf::Clock clock;  
 
     while (m_window.isOpen())
-    {
+    {   
+        // Reiniciamos el reloj y guardamos el tiempo transcurrido en segundos
         sf::Time elapsed = clock.restart();
-        m_deltaTime = elapsed.asSeconds(); // deltaTime
+        m_deltaTime = elapsed.asSeconds(); // <-deltaTime, es el utilizado como "tiempo" para los movimientos 
         while (m_window.pollEvent(m_event))
         {
-            /* code */
             if(m_event.type == sf::Event::Closed){
                 m_window.close();
             }
         }
         
+        // -> Actualizacion jugador
         m_player.Update(m_deltaTime);
+
+        // Actualizacion cada enemigo 
         for (size_t i = 0; i < std::ssize(m_enemies); i++)
         {
-            // --> Update enemy
             m_enemies[i].Update(m_deltaTime);
             std::cout<<m_enemies[i].getPosition()<<'\n';
         }
         
-
-
         m_window.clear(sf::Color::Black);
         m_window.draw(m_player.getDrawable());
 
+        // Renderizado por cada enemigo 
         for (size_t i = 0; i < std::ssize(m_enemies);  i++)
         {
-            /* code */
             m_window.draw(m_enemies[i].getDrawable());
         }
         

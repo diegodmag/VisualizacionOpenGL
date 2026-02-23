@@ -18,7 +18,7 @@
         if(math::linear::Magnitude(m_direction) >0){
             m_direction = math::linear::Normalize(m_direction);
             m_position += m_direction*m_speed*deltaTime;
-            // Graphics
+            // Se actualiza la representacion visual 
             m_shape.setPosition(m_position[0], m_position[1]);
         }
     }
