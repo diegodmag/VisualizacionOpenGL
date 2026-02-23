@@ -28,30 +28,23 @@ void Game::Update(){
         }
         
         m_player.Update(m_deltaTime);
-        std::cout<<m_deltaTime<<'\n';
-        // for (size_t i = 0; i < std::ssize(m_enemies); i++)
-        // {
-        //     // --> Player position 
-        //     // conpute direction 
-        //     math::linear::Vector2D directionToPlayer = m_player.getPosition() - m_enemies[i].getPosition();
-        //     directionToPlayer = math::linear::Normalize(directionToPlayer);
-        //     // m_enemies[i].SetTarget(directionToPlayer);
-        //     // m_enemies[i].SetTarget(math::linear::Vector2D{1.0f,1.0f});
-        //     // std::cout<<"Updating enemies\n"; 
-
-        //     // --> Update enemy
-        //     m_enemies[i].Update(m_deltaTime);
-        // }
+        for (size_t i = 0; i < std::ssize(m_enemies); i++)
+        {
+            // --> Update enemy
+            m_enemies[i].Update(m_deltaTime);
+            std::cout<<m_enemies[i].getPosition()<<'\n';
+        }
         
 
 
         m_window.clear(sf::Color::Black);
         m_window.draw(m_player.getDrawable());
-        // for (size_t i = 0; i < std::ssize(m_enemies);  i++)
-        // {a
-        //     /* code */
-        //     m_window.draw(m_enemies[i].getDrawable());
-        // }
+
+        for (size_t i = 0; i < std::ssize(m_enemies);  i++)
+        {
+            /* code */
+            m_window.draw(m_enemies[i].getDrawable());
+        }
         
         m_window.display();
     }

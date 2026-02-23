@@ -6,13 +6,13 @@
 
 class Enemy : public Entity{
 
+private: 
+
+    math::linear::Vector2D& m_target; 
+
 public:
 
-    using Entity::Entity;
-
-
-    // void SetTarget(const math::linear::Vector2D& target);
-    void FollowTarget(const math::linear::Vector2D& target, float deltaTime);
+    Enemy(sf::Color color, float radius, float x, float y, float speed, math::linear::Vector2D& target);
 
     void ComputeMovement(float deltaTime) override; 
 

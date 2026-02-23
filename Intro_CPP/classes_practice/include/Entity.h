@@ -25,6 +25,8 @@ public:
 
     const sf::Drawable& getDrawable() const;
     
+    math::linear::Vector2D& getPosition();
+
     const math::linear::Vector2D& getPosition()const;
 };
 

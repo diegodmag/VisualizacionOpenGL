@@ -25,5 +25,7 @@
 
     const sf::Drawable& Entity::getDrawable() const {return m_shape;}
 
+    math::linear::Vector2D& Entity::getPosition() {return m_position;}
+    
     const math::linear::Vector2D& Entity::getPosition()const {return m_position;}
 
