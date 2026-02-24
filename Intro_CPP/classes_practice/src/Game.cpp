@@ -6,7 +6,7 @@ Game::Game(Player& player, std::vector<Enemy>& enemies)
       m_enemies(enemies)
     {
 
-    m_window.create(sf::VideoMode(800, 600), "Vector Movement Demo");
+    m_window.create(sf::VideoMode(800, 600), "Practica 1");
     m_window.setFramerateLimit(60);
 
     }
@@ -35,7 +35,6 @@ void Game::Update(){
         for (size_t i = 0; i < std::ssize(m_enemies); i++)
         {
             m_enemies[i].Update(m_deltaTime);
-            std::cout<<m_enemies[i].getPosition()<<'\n';
         }
         
         m_window.clear(sf::Color::Black);

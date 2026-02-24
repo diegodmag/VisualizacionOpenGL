@@ -28,7 +28,7 @@ public:
     /**
      * @brief Método de movimiento polimórfico.
      * Todas las clases derivadas deben implementar esta función.
-     * * @param currentPos Referencia a la posición actual del Enemy.h
+     * @param currentPos Referencia a la posición actual del Enemy.h
      * @param target Posición del objetivo a alcanzar (El Player.h)
      * @param speed rapidez de movimiento
      * @param dt tiempo transcurrido
