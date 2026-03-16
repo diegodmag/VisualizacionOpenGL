@@ -9,8 +9,7 @@ public:
 
     using Entity::Entity; // Reusa el constructor
 
-    void Update() override;
-    
+    void Update(float deltaTime) override;
 
 };
 

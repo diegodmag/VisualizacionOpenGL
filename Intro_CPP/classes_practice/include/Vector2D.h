@@ -82,4 +82,13 @@ namespace math::linear {
 
 } // namespace math::linear
 
+namespace math::functions{
+
+    inline float Lerp(float a, float b, float t){
+        //this methods guaranties that x = b when t =1
+        return (1-t)*a + (t*b);
+    }
+};
+
+
 #endif
