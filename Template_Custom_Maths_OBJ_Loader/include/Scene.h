@@ -12,9 +12,12 @@
 
 #include "Model.h"
 #include "models/Cube.h"
+#include "models/CustomModel.h"
+
 
 #include "linear_math/Matrix4D.h"
 #include "linear_math/Vector3D.h"
+
 
 /**
  * @class Scene

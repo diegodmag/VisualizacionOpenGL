@@ -11,6 +11,7 @@
 
 #include "linear_math/Matrix4D.h"
 #include "linear_math/Vector3D.h"
+#include "MathUtils.h"
 
 /**
  * @class Model
@@ -61,12 +62,6 @@ public:
      * @param projection Matriz de proyeccion 
      */
     virtual void renderModel(const linear::math::Matrix4D& view, const linear::math::Matrix4D& projection) = 0;
-    // /**
-    //  * @brief Utiliza el ShaderProgram para renderizar el modelo a partir de las matrices de projection y de vista
-    //  * @param view Matriz de vista 
-    //  * @param projection Matriz de proyeccion 
-    //  */
-    // virtual void renderModel(const glm::mat4& view, const glm::mat4& projection) = 0;
     
     virtual void translate(const linear::math::Vector3D& translation) = 0; 
 

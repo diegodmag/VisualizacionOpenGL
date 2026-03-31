@@ -41,6 +41,8 @@ public:
 
     float getAspectRation() const {return static_cast<float>(m_width)/static_cast<float>(m_height);}
 
+    static void framebuffer_size_callback(GLFWwindow* window, int width, int height);
+
     /**
      * @brief Inicializa la biblioteca GLFW y la ventana m_window
      */

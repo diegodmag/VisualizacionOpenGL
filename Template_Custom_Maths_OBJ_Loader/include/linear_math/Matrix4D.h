@@ -6,6 +6,8 @@
 #include <cassert>
 #include "Vector3D.h"
 
+#include "MathUtils.h"
+
 namespace linear::math {
 
     struct Matrix4D {
@@ -99,8 +101,8 @@ namespace linear::math {
         // X-Rotation
         static Matrix4D rotateX(float angle) {
             Matrix4D result = identity();
-            float c = cosf(angle);
-            float s = sinf(angle);
+            float c = cosf(math::radians(angle));
+            float s = sinf(math::radians(angle));
                 
             result(1, 1) = c;
             result(2, 1) = -s;
@@ -113,8 +115,8 @@ namespace linear::math {
         // Y-Rotation
         static Matrix4D rotateY(float angle) {
             Matrix4D result = identity();
-                float c = cosf(angle);
-                float s = sinf(angle);
+                float c = cosf(math::radians(angle));
+                float s = sinf(math::radians(angle));
                 
                 result(0, 0) = c;
                 result(2, 0) = s;
@@ -127,8 +129,8 @@ namespace linear::math {
         // Rotation around Z axis
         static Matrix4D rotateZ(float angle) {
             Matrix4D result = identity();
-            float c = cosf(angle);
-            float s = sinf(angle);
+            float c = cosf(math::radians(angle));
+            float s = sinf(math::radians(angle));
             
             result(0, 0) = c;
             result(1, 0) = -s;
