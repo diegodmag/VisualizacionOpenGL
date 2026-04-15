@@ -30,7 +30,9 @@ private:
 
     WindowGL* m_window; 
     ShaderProgram*  m_shaderProgram; // This could be a std::vector of shader programs 
+    
     Model* m_model; // This could be a std::vector of Models 
+    Model* m_model_1; // This could be a std::vector of Models 
     
     Camera* m_camera; 
 
@@ -57,9 +59,15 @@ public:
     }
 
     /**
+     * @brief Procesa la entrada del usuario en esa escena 
+     */
+    void process_input(float deltaTime);
+
+    /**
      * @brief Ciclo de renderizado general 
      */
     void render(); 
+
 
 };
 

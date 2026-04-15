@@ -53,6 +53,10 @@ public:
      */
     void InitGLEW();
 
+    const int getWidth() const {return m_width;}
+    
+    const int getHeight() const {return m_height;}
+
 };
 
 

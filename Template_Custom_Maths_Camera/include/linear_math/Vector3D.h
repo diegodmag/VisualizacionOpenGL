@@ -30,6 +30,10 @@ namespace linear::math{
         return *this;
         }
 
+
+        inline Vector3D operator-() const {
+           return Vector3D{-x, -y, -z};
+        }
         // const inline Vector3D& operator=(const Vector3D& other) {
         // // Verificación de auto-asignación (v = v)
         // if (this != &other) {
@@ -49,6 +53,12 @@ namespace linear::math{
             x+=s;
             y+=s;
             z+=s;
+        }
+
+        inline void operator+=(Vector3D u){
+            x+=u.x;
+            y+=u.y;
+            z+=u.z;
         }
         
         inline void operator-=(float s){
