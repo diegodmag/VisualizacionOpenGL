@@ -4,31 +4,30 @@
 #include <vector>
 #include <glm/glm.hpp>
 
-class ObjLoader{
+class ObjLoader
+{
 
-private: 
+private:
+    // valores leidos de un OBJ
+    std::vector<float> vertVals;
+    std::vector<float> stVals;
+    std::vector<float> normVals;
 
-    // valores leidos de un OBJ 
-    std::vector<float> vertVals; 
-    std::vector<float> stVals; 
-    std::vector<float> normVals; 
+    // valores almacenados para ser usados como vertex attributes
+    std::vector<float> triangleVerts;
+    std::vector<float> textureCoords;
+    std::vector<float> normals;
 
-    // valores almacenados para ser usados como vertex attributes 
-    std::vector<float> triangleVerts; 
-    std::vector<float> textureCoords; 
-    std::vector<float> normals; 
+    std::vector<unsigned int> indices;
 
-    std::vector<unsigned int> indices; 
-
-public: 
-
+public:
     ObjLoader();
     void parseOBJ(const char *filePath);
-    int getNumVertices(); 
-    std::vector<float> getVertices(); 
-    std::vector<float> getTextureCoordinates(); 
+    int getNumVertices();
+    std::vector<float> getVertices();
+    std::vector<float> getTextureCoordinates();
     std::vector<float> getNormals();
-    std::vector<unsigned int> getIndices(); 
+    std::vector<unsigned int> getIndices();
 };
 
 #endif

@@ -3,71 +3,85 @@
 #include <fstream>
 #include <sstream>
 
-
 #include <string.h> // Para usar memcmp
-#include <map> 
+#include <map>
 
 struct PackedVertex
 {
-    int v, t, n; 
-    
-    bool operator<(const PackedVertex& that) const {
-        if (v != that.v) return v < that.v;
-        if (t != that.t) return t < that.t;
+    int v, t, n;
+
+    bool operator<(const PackedVertex &that) const
+    {
+        if (v != that.v)
+            return v < that.v;
+        if (t != that.t)
+            return t < that.t;
         return n < that.n;
     }
 };
 
-
-
-int resolveIndex(int idx, int size) {
-    if (idx > 0) {
-        return idx - 1; 
-    } else {
-        return size + idx; 
+int resolveIndex(int idx, int size)
+{
+    if (idx > 0)
+    {
+        return idx - 1;
+    }
+    else
+    {
+        return size + idx;
     }
 }
 
 ObjLoader::ObjLoader() {}
 
-void ObjLoader::parseOBJ(const char *filePath) {
+void ObjLoader::parseOBJ(const char *filePath)
+{
     float x, y, z;
     std::ifstream fileStream(filePath, std::ios::in);
-    if (!fileStream) {
+    if (!fileStream)
+    {
         std::cerr << "PROBLEM OPENING THE OBJ FILE" << std::endl;
         return;
     }
 
+    // La llave es el objeto PackedVertex y el valor rl indice
     std::map<PackedVertex, unsigned int> vertexToOutIndex;
     std::string line;
 
-    // Función lambda para añadir un vértice único (evita duplicados)
-    auto addVertex = [&](const PackedVertex& packed) -> unsigned int {
+    auto addVertex = [&](const PackedVertex &packed) -> unsigned int
+    {
         auto it = vertexToOutIndex.find(packed);
-        if (it != vertexToOutIndex.end()) {
+        if (it != vertexToOutIndex.end())
+        {
             return it->second;
         }
 
-        // Posición
+        // La posicion
         triangleVerts.push_back(vertVals[packed.v * 3]);
         triangleVerts.push_back(vertVals[packed.v * 3 + 1]);
         triangleVerts.push_back(vertVals[packed.v * 3 + 2]);
 
         // Textura
-        if (packed.t >= 0) {
+        if (packed.t >= 0)
+        {
             textureCoords.push_back(stVals[packed.t * 2]);
             textureCoords.push_back(stVals[packed.t * 2 + 1]);
-        } else {
+        }
+        else
+        {
             textureCoords.push_back(0.0f);
             textureCoords.push_back(0.0f);
         }
 
-        // Normal
-        if (packed.n >= 0) {
+        // Normales
+        if (packed.n >= 0)
+        {
             normals.push_back(normVals[packed.n * 3]);
             normals.push_back(normVals[packed.n * 3 + 1]);
             normals.push_back(normVals[packed.n * 3 + 2]);
-        } else {
+        }
+        else
+        {
             normals.push_back(0.0f);
             normals.push_back(0.0f);
             normals.push_back(0.0f);
@@ -78,33 +92,39 @@ void ObjLoader::parseOBJ(const char *filePath) {
         return newIndex;
     };
 
-    while (std::getline(fileStream, line)) {
-        if (line.compare(0, 2, "v ") == 0) {
+    while (std::getline(fileStream, line))
+    {
+        if (line.compare(0, 2, "v ") == 0)
+        {
             std::stringstream ss(line.substr(2));
             ss >> x >> y >> z;
             vertVals.push_back(x);
             vertVals.push_back(y);
             vertVals.push_back(z);
         }
-        else if (line.compare(0, 3, "vt ") == 0) {
+        else if (line.compare(0, 3, "vt ") == 0)
+        {
             std::stringstream ss(line.substr(3));
             ss >> x >> y;
             stVals.push_back(x);
             stVals.push_back(y);
         }
-        else if (line.compare(0, 3, "vn ") == 0) {
+        else if (line.compare(0, 3, "vn ") == 0)
+        {
             std::stringstream ss(line.substr(3));
             ss >> x >> y >> z;
             normVals.push_back(x);
             normVals.push_back(y);
             normVals.push_back(z);
         }
-        else if (line.compare(0, 2, "f ") == 0) {
+        else if (line.compare(0, 2, "f ") == 0)
+        {
             std::stringstream ss(line.substr(2));
             std::string oneCorner;
-            std::vector<PackedVertex> faceVerts;  // guarda los vértices de la cara
+            std::vector<PackedVertex> faceVerts; // guarda los vértices de la cara
 
-            while (ss >> oneCorner) {
+            while (ss >> oneCorner)
+            {
                 std::string v_str, t_str, n_str;
                 std::stringstream cornerSS(oneCorner);
                 std::getline(cornerSS, v_str, '/');
@@ -119,15 +139,19 @@ void ObjLoader::parseOBJ(const char *filePath) {
                 faceVerts.push_back(packed);
             }
 
-            // Triangulación de la cara
-            if (faceVerts.size() == 3) {
+            if (faceVerts.size() == 3)
+            {
                 // Triángulo directo
-                for (const auto& pv : faceVerts) {
+                for (const auto &pv : faceVerts)
+                {
                     indices.push_back(addVertex(pv));
                 }
-            } else if (faceVerts.size() > 3) {
-                // Abanico: (0,1,2), (0,2,3), (0,3,4), ...
-                for (size_t i = 1; i < faceVerts.size() - 1; ++i) {
+            }
+            else if (faceVerts.size() > 3)
+            {
+
+                for (size_t i = 1; i < faceVerts.size() - 1; ++i)
+                {
                     indices.push_back(addVertex(faceVerts[0]));
                     indices.push_back(addVertex(faceVerts[i]));
                     indices.push_back(addVertex(faceVerts[i + 1]));

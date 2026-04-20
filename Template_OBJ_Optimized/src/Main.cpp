@@ -1,12 +1,11 @@
 #include "Scene.h"
 
+int main()
+{
 
-
-int main(){
-
-    Scene scene {};
+    Scene scene{};
 
     scene.render();
 
-    return 0; 
+    return 0;
 }

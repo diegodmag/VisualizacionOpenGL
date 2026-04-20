@@ -1,8 +1,8 @@
-#ifndef SCENE_H 
+#ifndef SCENE_H
 #define SCENE_H
 
-#include <GL/glew.h>  
-#include <GLFW/glfw3.h> 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 // #include <glm/glm.hpp>
 // #include <glm/gtc/matrix_transform.hpp>
 // #include <glm/gtc/type_ptr.hpp>
@@ -14,51 +14,46 @@
 #include "models/Cube.h"
 #include "models/CustomModel.h"
 
-
 #include "linear_math/Matrix4D.h"
 #include "linear_math/Vector3D.h"
 
-
 /**
  * @class Scene
- * @brief Clase para modelar una escena que contiene una ventana, un shaderprogram y un modelo 
+ * @brief Clase para modelar una escena que contiene una ventana, un shaderprogram y un modelo
  */
 class Scene
 {
 private:
+    WindowGL *m_window;
+    ShaderProgram *m_shaderProgram; // This could be a std::vector of shader programs
+    Model *m_model;                 // This could be a std::vector of Models
 
-    WindowGL* m_window; 
-    ShaderProgram*  m_shaderProgram; // This could be a std::vector of shader programs 
-    Model* m_model; // This could be a std::vector of Models 
+    linear::math::Vector3D m_camera_pos;
 
-    linear::math::Vector3D m_camera_pos; 
-
-    linear::math::Matrix4D m_view; 
-    linear::math::Matrix4D m_projection; 
+    linear::math::Matrix4D m_view;
+    linear::math::Matrix4D m_projection;
 
     /**
-     * @brief Inicializacion 
+     * @brief Inicializacion
      */
     void init();
 
 public:
-
-    Scene(){
+    Scene()
+    {
         init();
     }
 
-    ~Scene(){
+    ~Scene()
+    {
         delete m_window;
         delete m_shaderProgram;
     }
 
     /**
-     * @brief Ciclo de renderizado general 
+     * @brief Ciclo de renderizado general
      */
-    void render(); 
-
+    void render();
 };
-
-
 
 #endif

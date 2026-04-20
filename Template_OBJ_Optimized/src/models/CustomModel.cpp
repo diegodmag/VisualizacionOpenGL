@@ -26,46 +26,29 @@ void CustomModel::initGeometry()
     m_numIndices = static_cast<int>(m_indices.size());
 }
 
-void CustomModel::initTexture()
-{
-
-    // Esto esta hardcodeado
-    m_textureID = Utils::LoadTexture("assets/textures/beagle.jpg");
-
-    glBindBuffer(GL_ARRAY_BUFFER, m_VBO[1]);
-    glBufferData(GL_ARRAY_BUFFER, m_textCoords.size() * sizeof(float), m_textCoords.data(), GL_STATIC_DRAW);
-
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, 0);
-    glEnableVertexAttribArray(1);
-}
-
 /**
  * @brief Configura el VAO, VBOs y el EBO en la GPU.
  */
 void CustomModel::init()
 {
-    // 1. Generar objetos
+    
     glGenVertexArrays(1, &VAO);
     glGenBuffers(NUM_VBOS, m_VBO);
     glGenBuffers(1, &m_EBO);
 
-    m_textureID = Utils::LoadTexture("assets/textures/beagle.jpg");
-
-
-    // 2. Atar el VAO para empezar a grabar la configuración
+    // El VAO que guarda la configuracion
     glBindVertexArray(VAO);
 
-    // --- POSICIONES (Atributo 0) ---
+    // POSICIONES (Atributo 0)
     if (!m_vertices.empty())
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_VBO[0]);
         glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(float), m_vertices.data(), GL_STATIC_DRAW);
-        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
         glEnableVertexAttribArray(0);
     }
 
-    // --- TEXTURAS (Atributo 1) ---
+    // TEXTURAS (Atributo 1)
     if (!m_textCoords.empty())
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_VBO[1]);
@@ -75,12 +58,11 @@ void CustomModel::init()
         glEnableVertexAttribArray(1);
     }
 
-    // --- NORMALES (Atributo 2) ---
+    // NORMALES (Atributo 2)
     if (!m_normalVecs.empty())
     {
         glBindBuffer(GL_ARRAY_BUFFER, m_VBO[2]);
         glBufferData(GL_ARRAY_BUFFER, m_normalVecs.size() * sizeof(float), m_normalVecs.data(), GL_STATIC_DRAW);
-        // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *)0);
         glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void *)0);
         glEnableVertexAttribArray(2);
     }
@@ -96,10 +78,7 @@ void CustomModel::init()
         std::cerr << "CUSTOM_MODEL_ERROR: No se pudieron cargar los índices para: " << m_filePath << std::endl;
     }
 
-    // Desatamos el VAO
-    // Inicializamos textura
-    // initTexture();
-    
+    // Deshabilitamos el VAO     
     glBindVertexArray(0);
 
 }
@@ -114,27 +93,23 @@ void CustomModel::renderModel(const linear::math::Matrix4D &view, const linear::
 
     m_shaderProgram->use();
 
-    // Activar Textura
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_textureID); // El ID de la textura cargada
-
+    
+    glActiveTexture(GL_TEXTURE0); // Activamos unidad de textura 0 
+    glBindTexture(GL_TEXTURE_2D, m_textureID); // asignamos una textura a esa unidad 
+    // Le pasamos 0 por que es la unidad de textura que definimos en el fragment shader 
     m_shaderProgram->setTextureUnit("samp", 0);
 
+    
     // Pasar matrices de transformación al shader
     m_shaderProgram->setMat4x4("model", m_model_mat);
     m_shaderProgram->setMat4x4("view", view);
     m_shaderProgram->setMat4x4("projection", projection);
 
-    // Al usar VAOs configurados en el init, solo bindeamos y dibujamos
     glBindVertexArray(VAO);
-    // glDrawElements(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, 0);
-    // glDrawArrays(GL_TRIANGLES, 0, m_vertices.size() / 3);
     glDrawElements(GL_TRIANGLES, m_numIndices, GL_UNSIGNED_INT, 0);
-    // glDrawArrays(GL_TRIANGLES, 0, m_vertices.size() / 3);
     glBindVertexArray(0);
 }
 
-// --- TRANSFORMACIONES ---
 
 void CustomModel::translate(const linear::math::Vector3D &translation)
 {
@@ -143,8 +118,6 @@ void CustomModel::translate(const linear::math::Vector3D &translation)
 
 void CustomModel::rotate(float angle, const linear::math::Vector3D &axis)
 {
-    // Nota: esta lógica con if(axis.x > 0) es rudimentaria, pero respetémosla por ahora.
-    // Lo importante es el orden: m_model_mat * rot
     if (axis.x > 0)
         m_model_mat = m_model_mat * linear::math::Matrix4D::rotateX(angle);
     if (axis.y > 0)
